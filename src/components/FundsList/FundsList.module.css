@@ -1,0 +1,10 @@
+.container {
+    width: 800px;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 36px;
+    padding: 20px;
+    text-align: center;
+}

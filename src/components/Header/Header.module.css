@@ -1,0 +1,50 @@
+.container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    font-family: Ebrima;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.catalog {
+    font-family: Arial;
+    margin: 0 0 0 22px;
+    padding: 11px 20px;
+    font-size: 16px;
+    color: white;
+    border-radius: 10px;
+    background-color: orangered;
+
+}
+
+.form {
+    margin: 0 270px 0 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.input {
+    font-size: 16px;
+    padding: 0 36px 0 16px;
+    height: 36px;
+    width: 604px;
+    border-radius: 10px 0 0 10px;
+    border: 2px solid orangered;
+}
+
+.input:focus {
+    outline: 0;
+    border: 3px solid orangered;
+}
+
+.button {
+    font-size: 16px;
+    color: white;
+    border-style: none;
+    border-radius: 0 10px 10px 0;
+    background-color: orangered;
+}

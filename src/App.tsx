@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import './App.css'
+import FundsList from './components/FundsList/FundsList'
+import CompaniesList from './components/CompaniesList/CompaniesList'
+import Header from './components/Header/Header'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+type AppPropsType = {
+	database: Array<object>
+	funds: Array<object>
+	companies: Array<object>
 }
 
-export default App;
+function App(props: AppPropsType) {
+	return (
+		<>
+			<div className='wrapper'>
+				<Header funds={props.funds} database={props.database} />
+				<FundsList funds={props.funds} database={props.database} />
+				<CompaniesList companies={props.companies} />
+			</div>
+		</>
+	)
+}
+
+export default App

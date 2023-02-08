@@ -4,13 +4,7 @@ import FundsList from './components/FundsList/FundsList'
 import CompaniesList from './components/CompaniesList/CompaniesList'
 import Header from './components/Header/Header'
 
-type AppPropsType = {
-	database: Array<object>
-	funds: Array<object>
-	companies: Array<object>
-}
-
-function App(props: AppPropsType) {
+function App(props: any) {
 	return (
 		<>
 			<div className='wrapper'>

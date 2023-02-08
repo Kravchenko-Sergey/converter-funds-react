@@ -9,7 +9,7 @@ type CompaniesListPropsType = {
 function CompaniesList(props: CompaniesListPropsType) {
 	const companyElements = props.companies.map(company => (
 		<Company
-			key={company.name}
+			key={company.id}
 			name={company.name}
 			shareInFund={company.shareInFund}
 			country={company.country}

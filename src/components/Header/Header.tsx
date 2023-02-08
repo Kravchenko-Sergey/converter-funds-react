@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import classes from './Header.module.css'
 
 type HeaderPropsType = {
@@ -8,38 +8,55 @@ type HeaderPropsType = {
 
 function Header(props: HeaderPropsType) {
 	const [value, setValue] = useState('')
-	const addForm = (event: any): void => {
-		event.preventDefault()
+	const [funds, setFunds] = useState(props.funds)
+	const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
+		setValue(event.currentTarget.value)
+	}
+	const addFund = (value: any) => {
+		console.log(props)
+		const newFund = {
+			name: value,
+			issuer: 'qwwq',
+			price: 4,
+			quantity: 555,
+			image: 'reggsdf'
+		}
 		console.log(value)
+		setFunds([...funds, newFund])
+		console.log(funds)
+	}
+	const handleButton = () => {
+		addFund(value)
+		setValue('')
+	}
+	/*const addForm = (event: any): void => {
 		const addFund: Array<any> = props.database.filter(
 			fund => fund.name === value
 		)
 		const addedFund: any = addFund[0]
-		const isFund: any = props.funds.some(fund => fund.name === addedFund?.name)
+		const isFund: any = props.funds.some(fund => fund.name === addedFund.name)
 
 		if (!isFund) {
-			//setArr(arr.push(addedFund))
+			console.log('1')
 		} else {
+			console.log('2')
 		}
-		console.log(addFund)
-		console.log(addedFund)
-		console.log(isFund)
-	}
+	}*/
 	return (
 		<div className={classes.container}>
 			<div className={classes.logo}>ConverterFunds</div>
 			<div className={classes.catalog}>Каталог</div>
-			<form className={classes.form}>
+			<div className={classes.form}>
 				<input
 					className={classes.input}
 					value={value}
-					onChange={event => setValue(event.target.value)}
+					onChange={handleInput}
 					placeholder='Найти фонд'
 				/>
-				<button className={classes.button} onClick={addForm}>
+				<button className={classes.button} onClick={handleButton}>
 					Добавить
 				</button>
-			</form>
+			</div>
 			<div>Войти</div>
 		</div>
 	)

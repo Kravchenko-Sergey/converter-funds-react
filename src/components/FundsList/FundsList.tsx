@@ -8,9 +8,10 @@ type FundsListPropsType = {
 }
 
 function FundsList(props: FundsListPropsType) {
+	const [value, setValue] = useState('')
 	const fundsElements = props.funds.map(fund => (
 		<Fund
-			key={fund.name}
+			key={fund.id}
 			name={fund.name}
 			issuer={fund.issuer}
 			price={fund.price}
@@ -18,8 +19,6 @@ function FundsList(props: FundsListPropsType) {
 			image={fund.image}
 		/>
 	))
-	const [value, setValue] = useState('')
-	const [arr, setArr] = useState(props.funds)
 	return (
 		<>
 			<div className={classes.container}>

@@ -1,9 +1,10 @@
 import React from 'react'
 import Company from './Company/Company'
 import classes from './CompaniesList.module.css'
+import { CompaniesType } from '../../App'
 
 type CompaniesListPropsType = {
-	companies: Array<any>
+	companies: Array<CompaniesType>
 }
 
 function CompaniesList(props: CompaniesListPropsType) {

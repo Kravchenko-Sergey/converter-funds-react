@@ -6,7 +6,6 @@ type FundPropsType = {
 	issuer: string
 	price: number
 	quantity: number
-	image: string
 }
 
 function Fund(props: FundPropsType) {
@@ -20,6 +19,7 @@ function Fund(props: FundPropsType) {
 		setTotalPriceFund(totalPriceFund !== 0 ? totalPriceFund - props.price : 0)
 		setQuantityFund(quantityFund !== 0 ? quantityFund - 1 : 0)
 	}
+
 	return (
 		<>
 			<div className={classes.container}>

@@ -1,34 +1,31 @@
 import React, { ChangeEvent, useState } from 'react'
 import classes from './Header.module.css'
+import { DatabaseType, FundsType } from '../../App'
 
 type HeaderPropsType = {
-	database: Array<any>
-	funds: Array<any>
+	database: Array<DatabaseType>
+	funds: Array<FundsType>
 }
 
 function Header(props: HeaderPropsType) {
 	const [value, setValue] = useState('')
-	const [funds, setFunds] = useState(props.funds)
+	const [funds, setFunds] = useState<Array<any>>(props.funds)
 	const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
 		setValue(event.currentTarget.value)
 	}
-	const addFund = (value: any) => {
+	const addFund = (value: string) => {
 		console.log(props)
 		const newFund = {
 			name: value,
 			issuer: 'qwwq',
 			price: 4,
-			quantity: 555,
-			image: 'reggsdf'
+			quantity: 555
 		}
 		console.log(value)
 		setFunds([...funds, newFund])
 		console.log(funds)
 	}
-	const handleButton = () => {
-		addFund(value)
-		setValue('')
-	}
+
 	/*const addForm = (event: any): void => {
 		const addFund: Array<any> = props.database.filter(
 			fund => fund.name === value
@@ -53,7 +50,7 @@ function Header(props: HeaderPropsType) {
 					onChange={handleInput}
 					placeholder='Найти фонд'
 				/>
-				<button className={classes.button} onClick={handleButton}>
+				<button className={classes.button} onClick={() => addFund(value)}>
 					Добавить
 				</button>
 			</div>

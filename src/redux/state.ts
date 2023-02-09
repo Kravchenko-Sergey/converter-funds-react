@@ -270,5 +270,5 @@ const state = {
 		}
 	]
 }
-console.log(state)
+
 export default state

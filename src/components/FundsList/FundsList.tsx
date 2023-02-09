@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import Fund from './Fund/Fund'
 import classes from './FundsList.module.css'
+import { DatabaseType, FundsType } from '../../App'
 
 type FundsListPropsType = {
-	funds: Array<any>
-	database: Array<any>
+	funds: Array<FundsType>
+	database: Array<DatabaseType>
 }
 
 function FundsList(props: FundsListPropsType) {
-	const [value, setValue] = useState('')
 	const fundsElements = props.funds.map(fund => (
 		<Fund
 			key={fund.id}
@@ -16,7 +16,6 @@ function FundsList(props: FundsListPropsType) {
 			issuer={fund.issuer}
 			price={fund.price}
 			quantity={fund.quantity}
-			image={fund.image}
 		/>
 	))
 	return (

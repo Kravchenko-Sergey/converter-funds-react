@@ -1,52 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './App.css'
-import FundsList from './components/FundsList/FundsList'
-import CompaniesList from './components/CompaniesList/CompaniesList'
-import Header from './components/Header/Header'
+import { FundsList } from './components/FundsList'
+import { CompaniesList } from './components/CompaniesList'
+import { store2 } from './index'
+import { addFundAC } from './reducers/fundsListReducer'
+import { useDispatch, useSelector } from 'react-redux'
 
-export type DatabaseType = {
-	id: string
-	name: string
-	issuer: string
-	quantity: number
-	price: number
-	totalPrice: number
-	composition: Array<CompaniesType>
-}
+function App() {
+	const [value, setValue] = useState('')
+	const fundsListDispatch = useDispatch()
+	const fundsList = useSelector((state: any) => state.fundsListReducer)
 
-export type FundsType = {
-	id: string
-	name: string
-	issuer: string
-	quantity: number
-	price: number
-	totalPrice: number
-	composition: Array<CompaniesType>
-}
+	const addTask = (name: string) => {
+		fundsListDispatch(addFundAC(name))
+		console.log(name)
+	}
 
-export type CompaniesType = {
-	id: string
-	name: string
-	shareInFund: number
-	country: string
-	sector: string
-}
-
-type AppPropsType = {
-	database: Array<DatabaseType>
-	funds: Array<FundsType>
-	companies: Array<CompaniesType>
-}
-
-function App(props: AppPropsType) {
 	return (
-		<>
-			<div className='wrapper'>
-				<Header funds={props.funds} database={props.database} />
-				<FundsList funds={props.funds} database={props.database} />
-				<CompaniesList companies={props.companies} />
+		<div className='wrapper'>
+			<div>
+				<input
+					type='text'
+					value={value}
+					onChange={e => {
+						setValue(e.currentTarget.value)
+					}}
+				/>
+				<button onClick={() => addTask(value)}>+</button>
 			</div>
-		</>
+			<FundsList database={store2.database} fundsList={fundsList} />
+			<CompaniesList companiesList={store2.companiesList} />
+		</div>
 	)
 }
 

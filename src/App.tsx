@@ -1,35 +1,36 @@
 import React, { useState } from 'react'
 import './App.css'
-import { FundsList } from './components/FundsList'
 import { CompaniesList } from './components/CompaniesList'
-import { store2 } from './index'
+import { FundsList } from './components/FundsList/FundsList'
 import { addFundAC } from './reducers/fundsListReducer'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 function App() {
 	const [value, setValue] = useState('')
-	const fundsListDispatch = useDispatch()
-	const fundsList = useSelector((state: any) => state.fundsListReducer)
 
-	const addTask = (name: string) => {
-		fundsListDispatch(addFundAC(name))
-		console.log(name)
+	const dispatch = useDispatch()
+
+	const addFund = (name: string) => {
+		dispatch(addFundAC(name))
 	}
 
 	return (
 		<div className='wrapper'>
-			<div>
+			<div className='container'>
 				<input
+					className='input'
 					type='text'
 					value={value}
 					onChange={e => {
 						setValue(e.currentTarget.value)
 					}}
 				/>
-				<button onClick={() => addTask(value)}>+</button>
+				<button className='button' onClick={() => addFund(value)}>
+					+
+				</button>
 			</div>
-			<FundsList database={store2.database} fundsList={fundsList} />
-			<CompaniesList companiesList={store2.companiesList} />
+			<FundsList />
+			<CompaniesList />
 		</div>
 	)
 }

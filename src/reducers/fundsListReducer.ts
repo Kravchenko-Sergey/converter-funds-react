@@ -1,33 +1,58 @@
-import { FundsListType, store2 } from '../index'
+import { database, FundFromFundsListType } from '../index'
 import { v1 } from 'uuid'
 
-const defaultState: any = []
+const initialState: FundFromFundsListType[] = []
 
 const ADD_FUND = 'ADD-FUND'
 
 export const fundsListReducer = (
-	state: FundsListType = defaultState,
-	action: AddFundACType
+	state: FundFromFundsListType[] = initialState,
+	action: ActionsType
 ): any => {
 	switch (action.type) {
 		case ADD_FUND: {
-			const newFund = {
-				id: v1(),
-				name: action.payload.name
-			}
-			return store2.database.map(fund =>
-				fund.name === action.payload.name ? [newFund, ...state] : state
+			const isFundInDB = database.find(
+				fund => fund.name === action.payload.name
 			)
+			const isFundInFundList = state.find(
+				fund => fund.name === action.payload.name
+			)
+			console.log(isFundInFundList)
+			return isFundInDB
+				? !isFundInFundList
+					? [
+							{
+								id: action.payload.id,
+								name: isFundInDB.name,
+								issuer: isFundInDB.issuer,
+								quantity: 1,
+								price: isFundInDB.price,
+								totalPrice: isFundInDB.price
+							},
+							...state
+					  ]
+					: state.map(fund =>
+							fund.id === isFundInFundList.id
+								? {
+										...fund,
+										quantity: fund.quantity + 1,
+										totalPrice: fund.price * (fund.quantity + 1)
+								  }
+								: fund
+					  )
+				: state
 		}
 		default:
 			return state
 	}
 }
 
+type ActionsType = AddFundACType
+
 type AddFundACType = ReturnType<typeof addFundAC>
 export const addFundAC = (name: string) => {
 	return {
 		type: ADD_FUND,
-		payload: { name }
+		payload: { id: v1(), name }
 	} as const
 }

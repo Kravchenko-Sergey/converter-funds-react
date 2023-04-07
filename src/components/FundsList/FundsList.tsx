@@ -6,6 +6,7 @@ import { FundFromFundsListType } from '../../index'
 import { CompaniesList } from '../CompaniesList'
 import {
 	decrementFundAC,
+	deleteFundHandlerAC,
 	incrementFundAC
 } from '../../reducers/fundsListReducer'
 
@@ -32,6 +33,7 @@ export const FundsList = ({}: FundsListPropsType) => {
 						<th>Price</th>
 						<th>Quantity</th>
 						<th>TotalPrice</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -41,6 +43,9 @@ export const FundsList = ({}: FundsListPropsType) => {
 						}
 						const decrementFundHandler = () => {
 							dispatch(decrementFundAC(fund.name))
+						}
+						const deleteFundHandler = () => {
+							dispatch(deleteFundHandlerAC(fund.name))
 						}
 						return (
 							<tr key={fund.id} className={classes.item}>
@@ -55,6 +60,9 @@ export const FundsList = ({}: FundsListPropsType) => {
 								</td>
 								<td>
 									<button onClick={decrementFundHandler}>-</button>
+								</td>
+								<td>
+									<button onClick={deleteFundHandler}>delete</button>
 								</td>
 							</tr>
 						)

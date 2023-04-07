@@ -6,6 +6,7 @@ const initialState: FundFromFundsListType[] = []
 const ADD_FUND = 'ADD-FUND'
 const INCREMENT_FUND = 'INCREMENT-FUND'
 const DECREMENT_FUND = 'DECREMENT-FUND'
+const DELETE_FUND = 'DELETE-FUND'
 
 export const fundsListReducer = (
 	state: FundFromFundsListType[] = initialState,
@@ -69,12 +70,19 @@ export const fundsListReducer = (
 					: fund
 			)
 		}
+		case DELETE_FUND: {
+			return state.filter(fund => fund.name !== action.payload.name)
+		}
 		default:
 			return state
 	}
 }
 
-type ActionsType = AddFundACType | IncrementFundACType | DecrementFundACType
+type ActionsType =
+	| AddFundACType
+	| IncrementFundACType
+	| DecrementFundACType
+	| DeleteFundHandlerACType
 
 type AddFundACType = ReturnType<typeof addFundAC>
 export const addFundAC = (name: string) => {
@@ -96,6 +104,14 @@ type DecrementFundACType = ReturnType<typeof decrementFundAC>
 export const decrementFundAC = (name: string) => {
 	return {
 		type: DECREMENT_FUND,
+		payload: { name }
+	} as const
+}
+
+type DeleteFundHandlerACType = ReturnType<typeof deleteFundHandlerAC>
+export const deleteFundHandlerAC = (name: string) => {
+	return {
+		type: DELETE_FUND,
 		payload: { name }
 	} as const
 }

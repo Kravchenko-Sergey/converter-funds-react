@@ -24,6 +24,11 @@ function App() {
 					onChange={e => {
 						setValue(e.currentTarget.value)
 					}}
+					onKeyPress={(e: any) => {
+						if (e.charCode === 13) {
+							addFund(value)
+						}
+					}}
 				/>
 				<button className='button' onClick={() => addFund(value)}>
 					+

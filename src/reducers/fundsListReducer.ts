@@ -4,6 +4,8 @@ import { v1 } from 'uuid'
 const initialState: FundFromFundsListType[] = []
 
 const ADD_FUND = 'ADD-FUND'
+const INCREMENT_FUND = 'INCREMENT-FUND'
+const DECREMENT_FUND = 'DECREMENT-FUND'
 
 export const fundsListReducer = (
 	state: FundFromFundsListType[] = initialState,
@@ -17,7 +19,6 @@ export const fundsListReducer = (
 			const isFundInFundList = state.find(
 				fund => fund.name === action.payload.name
 			)
-			console.log(isFundInFundList)
 			return isFundInDB
 				? !isFundInFundList
 					? [
@@ -27,7 +28,8 @@ export const fundsListReducer = (
 								issuer: isFundInDB.issuer,
 								quantity: 1,
 								price: isFundInDB.price,
-								totalPrice: isFundInDB.price
+								totalPrice: isFundInDB.price,
+								companies: isFundInDB.companies
 							},
 							...state
 					  ]
@@ -36,23 +38,64 @@ export const fundsListReducer = (
 								? {
 										...fund,
 										quantity: fund.quantity + 1,
-										totalPrice: fund.price * (fund.quantity + 1)
+										totalPrice: fund.price * (fund.quantity + 1),
+										companies: fund.companies.map(company =>
+											company ? { ...company } : company
+										)
 								  }
 								: fund
 					  )
 				: state
+		}
+		case INCREMENT_FUND: {
+			return state.map(fund =>
+				fund.name === action.payload.name
+					? {
+							...fund,
+							quantity: fund.quantity + 1,
+							totalPrice: fund.price * (fund.quantity + 1)
+					  }
+					: fund
+			)
+		}
+		case DECREMENT_FUND: {
+			return state.map(fund =>
+				fund.name === action.payload.name
+					? {
+							...fund,
+							quantity: fund.quantity - 1,
+							totalPrice: fund.price * (fund.quantity - 1)
+					  }
+					: fund
+			)
 		}
 		default:
 			return state
 	}
 }
 
-type ActionsType = AddFundACType
+type ActionsType = AddFundACType | IncrementFundACType | DecrementFundACType
 
 type AddFundACType = ReturnType<typeof addFundAC>
 export const addFundAC = (name: string) => {
 	return {
 		type: ADD_FUND,
 		payload: { id: v1(), name }
+	} as const
+}
+
+type IncrementFundACType = ReturnType<typeof incrementFundAC>
+export const incrementFundAC = (name: string) => {
+	return {
+		type: INCREMENT_FUND,
+		payload: { name }
+	} as const
+}
+
+type DecrementFundACType = ReturnType<typeof decrementFundAC>
+export const decrementFundAC = (name: string) => {
+	return {
+		type: DECREMENT_FUND,
+		payload: { name }
 	} as const
 }

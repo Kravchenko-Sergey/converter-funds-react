@@ -30,7 +30,7 @@ function App() {
 				</button>
 			</div>
 			<FundsList />
-			<CompaniesList />
+			{/*<CompaniesList />*/}
 		</div>
 	)
 }

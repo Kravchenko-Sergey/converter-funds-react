@@ -1,0 +1,36 @@
+import React from 'react'
+import styled from 'styled-components'
+
+export const Header = () => {
+	return (
+		<Wrapper>
+			<Container>
+				<h1>ConverterFunds</h1>
+				<List>
+					<li>login</li>
+					<li>logout</li>
+				</List>
+			</Container>
+		</Wrapper>
+	)
+}
+
+const Wrapper = styled.div`
+	background-color: cornflowerblue;
+`
+
+const Container = styled.div`
+	width: 80%;
+	height: 70px;
+	margin: 0 auto 10px auto;
+	display: grid;
+	grid-template-columns: 1fr 0.1fr 0.1fr;
+	align-items: center;
+`
+
+const List = styled.ul`
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	color: white;
+	list-style: none;
+`

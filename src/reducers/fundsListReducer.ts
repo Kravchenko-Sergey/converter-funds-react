@@ -3,7 +3,7 @@ import { v1 } from 'uuid'
 
 const initialState: FundFromFundsListType[] = []
 
-const ADD_FUND = 'ADD-FUND'
+export const ADD_FUND = 'ADD-FUND'
 const INCREMENT_FUND = 'INCREMENT-FUND'
 const DECREMENT_FUND = 'DECREMENT-FUND'
 const DELETE_FUND = 'DELETE-FUND'
@@ -30,7 +30,20 @@ export const fundsListReducer = (
 								quantity: 1,
 								price: isFundInDB.price,
 								totalPrice: isFundInDB.price,
-								companies: isFundInDB.companies
+								companies: isFundInDB.companies.map(company =>
+									company
+										? {
+												...company,
+												sumInFund:
+													(isFundInDB.price / 100) * company.shareInFund,
+												shareInPortfolio:
+													((isFundInDB.price / 100) * company.shareInFund) /
+													(action.payload.totalValue / 100),
+												sumInPortfolio:
+													(isFundInDB.price / 100) * company.shareInFund
+										  }
+										: company
+								)
 							},
 							...state
 					  ]
@@ -40,9 +53,15 @@ export const fundsListReducer = (
 										...fund,
 										quantity: fund.quantity + 1,
 										totalPrice: fund.price * (fund.quantity + 1),
-										companies: fund.companies.map(company =>
-											company ? { ...company } : company
-										)
+										companies: fund.companies.map(company => ({
+											...company,
+											sumInFund: (fund.totalPrice / 100) * company.shareInFund,
+											shareInPortfolio:
+												((fund.totalPrice / 100) * company.shareInFund) /
+												(action.payload.totalValue / 100),
+											sumInPortfolio:
+												(fund.totalPrice / 100) * company.shareInFund
+										}))
 								  }
 								: fund
 					  )
@@ -85,10 +104,10 @@ type ActionsType =
 	| DeleteFundHandlerACType
 
 type AddFundACType = ReturnType<typeof addFundAC>
-export const addFundAC = (name: string) => {
+export const addFundAC = (name: string, totalValue: number) => {
 	return {
 		type: ADD_FUND,
-		payload: { id: v1(), name }
+		payload: { id: v1(), name, totalValue }
 	} as const
 }
 

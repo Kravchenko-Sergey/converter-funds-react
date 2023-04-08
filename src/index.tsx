@@ -1,7 +1,6 @@
-import React, { useReducer } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './index.css'
-import App from './App'
+import { App } from './App'
 import { Provider } from 'react-redux'
 import { store } from './state/store'
 import { v1 } from 'uuid'
@@ -35,6 +34,7 @@ export type CompanyFromFundsListType = {
 	totalPrice: number
 	shareInFund: number
 	shareInPortfolio: number
+	sumInPortfolio: number
 }
 
 export const database = [
@@ -42,37 +42,37 @@ export const database = [
 		id: v1(),
 		name: 'voo',
 		issuer: 'Vanguard',
-		price: 359.85,
+		price: 375.93,
 		companies: [
 			{
 				id: v1(),
 				name: 'Apple',
 				price: 154.75,
-				shareInFund: 6.6
+				shareInFund: 6.02
 			},
 			{
 				id: v1(),
 				name: 'Microsoft',
 				price: 279.31,
-				shareInFund: 5.56
+				shareInFund: 5.54
+			},
+			{
+				id: v1(),
+				name: 'Alphabet',
+				price: 98.95,
+				shareInFund: 3.06
 			},
 			{
 				id: v1(),
 				name: 'Amazon',
-				price: 98.95,
-				shareInFund: 2.5
-			},
-			{
-				id: v1(),
-				name: 'NVIDIA',
 				price: 256.5,
-				shareInFund: 1.73
+				shareInFund: 2.31
 			},
 			{
 				id: v1(),
-				name: 'Tesla',
+				name: 'Berkshire Hathaway',
 				price: 179.65,
-				shareInFund: 1.65
+				shareInFund: 1.73
 			}
 		]
 	},
@@ -80,37 +80,37 @@ export const database = [
 		id: v1(),
 		name: 'spdw',
 		issuer: 'BlackRock',
-		price: 30.4,
+		price: 32.14,
 		companies: [
 			{
 				id: v1(),
 				name: 'Nestle',
 				price: 70,
-				shareInFund: 1.54
+				shareInFund: 1.53
 			},
 			{
 				id: v1(),
 				name: 'ASML',
 				price: 70,
-				shareInFund: 1.21
+				shareInFund: 1.19
 			},
 			{
 				id: v1(),
 				name: 'Samsung',
 				price: 70,
-				shareInFund: 1.13
+				shareInFund: 1.17
+			},
+			{
+				id: v1(),
+				name: 'Roche',
+				price: 70,
+				shareInFund: 1.08
 			},
 			{
 				id: v1(),
 				name: 'Novo Nordisk',
 				price: 70,
-				shareInFund: 1.09
-			},
-			{
-				id: v1(),
-				name: 'LVMH',
-				price: 70,
-				shareInFund: 1.07
+				shareInFund: 1.05
 			}
 		]
 	},
@@ -118,37 +118,37 @@ export const database = [
 		id: v1(),
 		name: 'iemg',
 		issuer: 'IShares',
-		price: 46.57,
+		price: 48.69,
 		companies: [
 			{
 				id: v1(),
 				name: 'TSC',
 				price: 89.47,
-				shareInFund: 1.07
-			},
-			{
-				id: v1(),
-				name: 'Tencent',
-				price: 42.93,
-				shareInFund: 1.07
+				shareInFund: 5.18
 			},
 			{
 				id: v1(),
 				name: 'Samsung',
+				price: 42.93,
+				shareInFund: 3.92
+			},
+			{
+				id: v1(),
+				name: 'Tencent',
 				price: 40.6,
-				shareInFund: 1.07
+				shareInFund: 3.9
 			},
 			{
 				id: v1(),
 				name: 'Alibaba',
 				price: 81.7,
-				shareInFund: 1.07
+				shareInFund: 2.71
 			},
 			{
 				id: v1(),
-				name: 'Reliance',
+				name: 'Meituan',
 				price: 2223.1,
-				shareInFund: 1.07
+				shareInFund: 1.31
 			}
 		]
 	}

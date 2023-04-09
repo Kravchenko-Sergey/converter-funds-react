@@ -1,7 +1,7 @@
 import { database, FundFromFundsListType } from '../index'
 import { v1 } from 'uuid'
 
-const initialState: FundFromFundsListType[] = []
+export const initialState: FundFromFundsListType[] = []
 
 export const ADD_FUND = 'ADD-FUND'
 const INCREMENT_FUND = 'INCREMENT-FUND'
@@ -81,11 +81,13 @@ export const fundsListReducer = (
 		case DECREMENT_FUND: {
 			return state.map(fund =>
 				fund.name === action.payload.name
-					? {
-							...fund,
-							quantity: fund.quantity - 1,
-							totalPrice: fund.price * (fund.quantity - 1)
-					  }
+					? fund.quantity > 0
+						? {
+								...fund,
+								quantity: fund.quantity - 1,
+								totalPrice: fund.price * (fund.quantity - 1)
+						  }
+						: fund
 					: fund
 			)
 		}

@@ -22,15 +22,15 @@ const Wrapper = styled.div`
 const Container = styled.div`
 	width: 80%;
 	height: 70px;
-	margin: 0 auto 10px auto;
+	margin: 0 auto 30px auto;
 	display: grid;
-	grid-template-columns: 1fr 0.1fr 0.1fr;
+	grid-template-columns: 1.4fr 0.1fr;
 	align-items: center;
 `
 
 const List = styled.ul`
-	display: grid;
-	grid-template-columns: 1fr 1fr;
 	color: white;
 	list-style: none;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
 `

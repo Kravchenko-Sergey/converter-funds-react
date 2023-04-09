@@ -10,6 +10,7 @@ import {
 	incrementFundAC
 } from '../../reducers/fundsListReducer'
 import styled from 'styled-components'
+import { DatabaseMissingErrorAC } from '../../reducers/errorReducer'
 
 type FundsListPropsType = {}
 
@@ -17,12 +18,13 @@ export const FundsList = ({}: FundsListPropsType) => {
 	const fundsList = useSelector<AppRootStateType, FundFromFundsListType[]>(
 		state => state.fundsList
 	)
-
+	const error = useSelector<AppRootStateType, string>(state => state.error)
 	const dispatch = useDispatch()
 
 	const [value, setValue] = useState('')
 	const addFund = (name: string, totalValue: number) => {
 		dispatch(addFundAC(name, totalValue))
+		dispatch(DatabaseMissingErrorAC(name))
 	}
 
 	const totalValue = fundsList.reduce((acc, fund) => {
@@ -48,6 +50,7 @@ export const FundsList = ({}: FundsListPropsType) => {
 				<Button className='button' onClick={() => addFund(value, totalValue)}>
 					+
 				</Button>
+				<Error>{error}</Error>
 			</InputBlock>
 			<Total>Total value: {totalValue.toFixed(2)}</Total>
 			<FundsListTable>
@@ -107,6 +110,7 @@ const InputBlock = styled.div`
 	display: grid;
 	justify-content: center;
 	grid-template-columns: 1fr 0.1fr;
+	grid-template-rows: 1fr 0;
 	column-gap: 10px;
 	grid-row: 1 / 2;
 	grid-column: 2 / 3;
@@ -116,6 +120,12 @@ const Input = styled.input`
 	font-size: 16px;
 	border: 2px solid grey;
 	border-radius: 5px;
+`
+
+const Error = styled.div`
+	padding: 0 0 0 10px;
+	font-size: 14px;
+	color: crimson;
 `
 
 const PropertyButtons = styled.td`
@@ -133,7 +143,7 @@ const Button = styled.button`
 
 const DeleteButton = styled(Button)`
 	padding: 4px 8px;
-	background-color: darkred;
+	background-color: crimson;
 `
 
 const Total = styled.div`

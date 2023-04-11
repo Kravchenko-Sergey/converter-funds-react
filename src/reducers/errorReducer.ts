@@ -1,27 +1,33 @@
 import { database } from '../index'
 
+const INPUT_ERRORS = 'INPUT-ERRORS'
 const DATABASE_MISSING_ERROR = 'DATABASE-MISSING-ERROR'
 
 export const errorReducer = (
 	state: string = '',
-	action: DatabaseMissingErrorACType
+	action: ActionsType
 ): string => {
 	switch (action.type) {
-		case DATABASE_MISSING_ERROR: {
+		case INPUT_ERRORS: {
 			const isFundInDB = database.find(
 				fund => fund.name === action.payload.name
 			)
-			return isFundInDB ? '' : 'There is no such fund in the database'
+			return action.payload.name.trim() === ''
+				? 'value must not be empty'
+				: isFundInDB
+				? ''
+				: 'There is no such fund in the database'
 		}
 		default:
 			return state
 	}
 }
 
-type DatabaseMissingErrorACType = ReturnType<typeof DatabaseMissingErrorAC>
-export const DatabaseMissingErrorAC = (name: string) => {
+type ActionsType = InputErrorsACType
+type InputErrorsACType = ReturnType<typeof inputErrorsAC>
+export const inputErrorsAC = (name: string) => {
 	return {
-		type: DATABASE_MISSING_ERROR,
+		type: INPUT_ERRORS,
 		payload: { name }
 	} as const
 }

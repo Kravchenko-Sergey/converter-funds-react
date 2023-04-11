@@ -10,53 +10,33 @@ import {
 	incrementFundAC
 } from '../../reducers/fundsListReducer'
 import styled from 'styled-components'
-import { DatabaseMissingErrorAC } from '../../reducers/errorReducer'
+import { inputErrorsAC } from '../../reducers/errorReducer'
+import { Button } from '../Header/Input/Input'
 
-type FundsListPropsType = {}
+type FundsListPropsType = {
+	totalValue: number
+}
 
-export const FundsList = ({}: FundsListPropsType) => {
+export const FundsList = ({ totalValue }: FundsListPropsType) => {
 	const fundsList = useSelector<AppRootStateType, FundFromFundsListType[]>(
 		state => state.fundsList
 	)
-	const error = useSelector<AppRootStateType, string>(state => state.error)
+
 	const dispatch = useDispatch()
 
-	const [value, setValue] = useState('')
 	const addFund = (name: string, totalValue: number) => {
 		dispatch(addFundAC(name, totalValue))
-		dispatch(DatabaseMissingErrorAC(name))
+		dispatch(inputErrorsAC(name))
 	}
-
-	const totalValue = fundsList.reduce((acc, fund) => {
-		return acc + fund.totalPrice
-	}, 0)
 
 	return (
 		<Container>
-			<InputBlock>
-				<Input
-					className='input'
-					type='text'
-					value={value}
-					onChange={e => {
-						setValue(e.currentTarget.value)
-					}}
-					onKeyPress={(e: any) => {
-						if (e.charCode === 13) {
-							addFund(value, totalValue)
-						}
-					}}
-				/>
-				<Button className='button' onClick={() => addFund(value, totalValue)}>
-					+
-				</Button>
-				<Error>{error}</Error>
-			</InputBlock>
 			<Total>Total value: {totalValue.toFixed(2)}</Total>
 			<FundsListTable>
 				<thead>
 					<Titles>
 						<Title>Name</Title>
+						<Title>Issuer</Title>
 						<Title>Price</Title>
 						<Title>Quantity</Title>
 						<Title>TotalPrice</Title>
@@ -70,6 +50,7 @@ export const FundsList = ({}: FundsListPropsType) => {
 						}
 						const decrementFundHandler = () => {
 							dispatch(decrementFundAC(fund.name))
+							fund.quantity === 1 && dispatch(deleteFundHandlerAC(fund.name))
 						}
 						const deleteFundHandler = () => {
 							dispatch(deleteFundHandlerAC(fund.name))
@@ -77,6 +58,7 @@ export const FundsList = ({}: FundsListPropsType) => {
 						return (
 							<Properties key={fund.id}>
 								<Property>{fund.name}</Property>
+								<Property>{fund.issuer}</Property>
 								<Property>{fund.price}</Property>
 								<Property>{fund.quantity}</Property>
 								<Property>{fund.totalPrice.toFixed(2)}</Property>
@@ -106,44 +88,16 @@ const Container = styled.div`
 	gap: 10px;
 `
 
-const InputBlock = styled.div`
-	display: grid;
-	justify-content: center;
-	grid-template-columns: 1fr 0.1fr;
-	grid-template-rows: 1fr 0;
-	column-gap: 10px;
-	grid-row: 1 / 2;
-	grid-column: 2 / 3;
-`
-const Input = styled.input`
-	padding: 10px 0 10px 10px;
-	font-size: 16px;
-	border: 2px solid grey;
-	border-radius: 5px;
-`
-
-const Error = styled.div`
-	padding: 0 0 0 10px;
-	font-size: 14px;
-	color: crimson;
-`
-
 const PropertyButtons = styled.td`
 	display: grid;
 	grid-template-columns: 0.4fr 0.4fr 1.2fr;
 	column-gap: 5px;
 `
 
-const Button = styled.button`
-	color: white;
-	background-color: cornflowerblue;
-	border-style: none;
-	border-radius: 5px;
-`
-
 const DeleteButton = styled(Button)`
 	padding: 4px 8px;
 	background-color: crimson;
+	border-radius: 5px;
 `
 
 const Total = styled.div`
@@ -164,7 +118,7 @@ const FundsListTable = styled.table`
 
 const Titles = styled.tr`
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 `
 
 const Title = styled.td`
@@ -179,58 +133,7 @@ const Funds = styled.tbody`
 
 const Properties = styled.tr`
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 `
 
 const Property = styled.td``
-
-////////APP//////////////
-
-/*
-
-.input {
-	padding: 0 0 0 5px;
-	border: 2px solid lightgrey;
-	border-radius: 5px;
-	flex: 1 1 90%;
-}
-
-.button {
-	margin: 0 0 0 10px;
-	padding: 10px 0;
-	flex: 1 1 10%;
-	border-style: none;
-	border-radius: 5px;
-	background-color: lightblue;
-}*/
-
-//////////FUNDLIST/////////////
-
-/*
-.container {
-  margin: 20px auto;
-  min-height: 155px;
-  width: 500px;
-  border: 2px solid lightgrey;
-  border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-}
-
-.item {
-  padding: 5px;
-  display: flex;
-}
-
-.property {
-  flex: 1 1 50%;
-}
-
-thead {
-  width: 500px;
-}
-
-th {
-  width: 107px;
-  text-align: start;
-}*/

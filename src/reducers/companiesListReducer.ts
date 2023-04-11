@@ -1,6 +1,3 @@
-import { v1 } from 'uuid'
-import { database } from '../index'
-
 const defaultState: any = []
 
 const ADD_FUND = 'ADD-FUND'

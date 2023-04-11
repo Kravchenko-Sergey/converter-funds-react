@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppRootStateType } from '../../../state/store'
 import { addFundAC } from '../../../reducers/fundsListReducer'
+import searchIcon from '../../../assets/images/search-magnifying-glass-svgrepo-com.svg'
 
 type InputPropsType = {
 	totalValue: number
@@ -26,7 +27,9 @@ export const Input = ({ totalValue }: InputPropsType) => {
 					}
 				}}
 			/>
-			<Button onClick={() => dispatch(addFundAC(value, totalValue))}>+</Button>
+			<Button onClick={() => dispatch(addFundAC(value, totalValue))}>
+				<img src={searchIcon} alt='searchIcon' />
+			</Button>
 			<Error>{error}</Error>
 		</InputBlock>
 	)
@@ -60,9 +63,12 @@ export const Button = styled.button`
 	background-color: cornflowerblue;
 	border-style: none;
 	border-radius: 0 5px 5px 0;
-
 	&:hover {
 		background-color: #3875ea;
 		transition: 0.5s;
+	}
+	& img {
+		width: 26px;
+		height: 26px;
 	}
 `

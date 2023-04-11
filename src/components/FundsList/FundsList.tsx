@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppRootStateType } from '../../state/store'
 import { FundFromFundsListType } from '../../index'
@@ -11,7 +11,7 @@ import {
 } from '../../reducers/fundsListReducer'
 import styled from 'styled-components'
 import { inputErrorsAC } from '../../reducers/errorReducer'
-import { Button } from '../Header/Input/Input'
+import { Fund } from './Fund/Fund'
 
 type FundsListPropsType = {
 	totalValue: number
@@ -56,20 +56,18 @@ export const FundsList = ({ totalValue }: FundsListPropsType) => {
 							dispatch(deleteFundHandlerAC(fund.name))
 						}
 						return (
-							<Properties key={fund.id}>
-								<Property>{fund.name}</Property>
-								<Property>{fund.issuer}</Property>
-								<Property>{fund.price}</Property>
-								<Property>{fund.quantity}</Property>
-								<Property>{fund.totalPrice.toFixed(2)}</Property>
-								<PropertyButtons>
-									<Button onClick={incrementFundHandler}>+</Button>
-									<Button onClick={decrementFundHandler}>-</Button>
-									<DeleteButton onClick={deleteFundHandler}>
-										delete
-									</DeleteButton>
-								</PropertyButtons>
-							</Properties>
+							<Fund
+								key={fund.id}
+								id={fund.id}
+								name={fund.name}
+								issuer={fund.issuer}
+								price={fund.price}
+								quantity={fund.quantity}
+								totalPrice={fund.totalPrice}
+								incrementFundHandler={incrementFundHandler}
+								decrementFundHandler={decrementFundHandler}
+								deleteFundHandler={deleteFundHandler}
+							/>
 						)
 					})}
 				</Funds>
@@ -86,18 +84,6 @@ const Container = styled.div`
 	grid-template-columns: 1fr 2fr 1fr;
 	grid-template-rows: 1fr 1fr 10fr;
 	gap: 10px;
-`
-
-const PropertyButtons = styled.td`
-	display: grid;
-	grid-template-columns: 0.4fr 0.4fr 1.2fr;
-	column-gap: 5px;
-`
-
-const DeleteButton = styled(Button)`
-	padding: 4px 8px;
-	background-color: crimson;
-	border-radius: 5px;
 `
 
 const Total = styled.div`
@@ -130,10 +116,3 @@ const Funds = styled.tbody`
 	display: grid;
 	row-gap: 5px;
 `
-
-const Properties = styled.tr`
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-`
-
-const Property = styled.td``

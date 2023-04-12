@@ -1,17 +1,11 @@
 import { database } from '../index'
 
 const INPUT_ERRORS = 'INPUT-ERRORS'
-const DATABASE_MISSING_ERROR = 'DATABASE-MISSING-ERROR'
 
-export const errorReducer = (
-	state: string = '',
-	action: ActionsType
-): string => {
+export const errorReducer = (state: string = '', action: ActionsType): string => {
 	switch (action.type) {
 		case INPUT_ERRORS: {
-			const isFundInDB = database.find(
-				fund => fund.name === action.payload.name
-			)
+			const isFundInDB = database.find(fund => fund.name === action.payload.name)
 			return action.payload.name.trim() === ''
 				? 'value must not be empty'
 				: isFundInDB

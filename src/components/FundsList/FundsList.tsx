@@ -3,12 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppRootStateType } from '../../state/store'
 import { FundFromFundsListType } from '../../index'
 import { CompaniesList } from '../CompaniesList'
-import {
-	addFundAC,
-	decrementFundAC,
-	deleteFundHandlerAC,
-	incrementFundAC
-} from '../../reducers/fundsListReducer'
+import { addFundAC, decrementFundAC, deleteFundHandlerAC, incrementFundAC } from '../../reducers/fundsListReducer'
 import styled from 'styled-components'
 import { inputErrorsAC } from '../../reducers/errorReducer'
 import { Fund } from './Fund/Fund'
@@ -18,9 +13,7 @@ type FundsListPropsType = {
 }
 
 export const FundsList = ({ totalValue }: FundsListPropsType) => {
-	const fundsList = useSelector<AppRootStateType, FundFromFundsListType[]>(
-		state => state.fundsList
-	)
+	const fundsList = useSelector<AppRootStateType, FundFromFundsListType[]>(state => state.fundsList)
 
 	const dispatch = useDispatch()
 
@@ -29,9 +22,36 @@ export const FundsList = ({ totalValue }: FundsListPropsType) => {
 		dispatch(inputErrorsAC(name))
 	}
 
+	const fundsElements = fundsList.map(fund => {
+		const incrementFundHandler = () => {
+			dispatch(incrementFundAC(fund.name))
+		}
+		const decrementFundHandler = () => {
+			dispatch(decrementFundAC(fund.name))
+			fund.quantity === 1 && dispatch(deleteFundHandlerAC(fund.name))
+		}
+		const deleteFundHandler = () => {
+			dispatch(deleteFundHandlerAC(fund.name))
+		}
+		return (
+			<Fund
+				key={fund.id}
+				id={fund.id}
+				name={fund.name}
+				issuer={fund.issuer}
+				price={fund.price}
+				quantity={fund.quantity}
+				totalPrice={fund.totalPrice}
+				incrementFundHandler={incrementFundHandler}
+				decrementFundHandler={decrementFundHandler}
+				deleteFundHandler={deleteFundHandler}
+			/>
+		)
+	})
+
 	return (
 		<Container>
-			<Total>Total value: {totalValue.toFixed(2)}</Total>
+			<Total>Total value: {totalValue}</Total>
 			<FundsListTable>
 				<thead>
 					<Titles>
@@ -43,34 +63,7 @@ export const FundsList = ({ totalValue }: FundsListPropsType) => {
 						<Title></Title>
 					</Titles>
 				</thead>
-				<Funds>
-					{fundsList.map(fund => {
-						const incrementFundHandler = () => {
-							dispatch(incrementFundAC(fund.name))
-						}
-						const decrementFundHandler = () => {
-							dispatch(decrementFundAC(fund.name))
-							fund.quantity === 1 && dispatch(deleteFundHandlerAC(fund.name))
-						}
-						const deleteFundHandler = () => {
-							dispatch(deleteFundHandlerAC(fund.name))
-						}
-						return (
-							<Fund
-								key={fund.id}
-								id={fund.id}
-								name={fund.name}
-								issuer={fund.issuer}
-								price={fund.price}
-								quantity={fund.quantity}
-								totalPrice={fund.totalPrice}
-								incrementFundHandler={incrementFundHandler}
-								decrementFundHandler={decrementFundHandler}
-								deleteFundHandler={deleteFundHandler}
-							/>
-						)
-					})}
-				</Funds>
+				<Funds>{fundsElements}</Funds>
 			</FundsListTable>
 			<CompaniesList />
 		</Container>

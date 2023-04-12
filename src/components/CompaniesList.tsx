@@ -1,17 +1,12 @@
 import React from 'react'
 import { CompanyFromFundsListType } from '../index'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { AppRootStateType } from '../state/store'
 
 type CompaniesListPropsType = {}
 
 export const CompaniesList = ({}: CompaniesListPropsType) => {
-	const companiesList = useSelector<
-		AppRootStateType,
-		CompanyFromFundsListType[]
-	>(state => state.companiesList)
-
-	const fundsListDispatch = useDispatch()
+	const companiesList = useSelector<AppRootStateType, CompanyFromFundsListType[]>(state => state.companiesList)
 
 	return (
 		<div>

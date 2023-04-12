@@ -7,12 +7,14 @@ import { AppRootStateType } from './state/store'
 import { FundFromFundsListType } from './index'
 
 export function App() {
-	const fundsList = useSelector<AppRootStateType, FundFromFundsListType[]>(
-		state => state.fundsList
+	const fundsList = useSelector<AppRootStateType, FundFromFundsListType[]>(state => state.fundsList)
+	const totalValue = Number(
+		fundsList
+			.reduce((acc, fund) => {
+				return acc + fund.totalPrice
+			}, 0)
+			.toFixed(2)
 	)
-	const totalValue = fundsList.reduce((acc, fund) => {
-		return acc + fund.totalPrice
-	}, 0)
 	return (
 		<Wrapper>
 			<GlobalStyle />
@@ -30,8 +32,6 @@ const GlobalStyle = createGlobalStyle`
 },
 *::before,
 *::after {
-  
-	
 }
 
 body {

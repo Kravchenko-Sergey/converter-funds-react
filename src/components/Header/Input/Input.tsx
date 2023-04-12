@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppRootStateType } from '../../../state/store'
 import { addFundAC } from '../../../reducers/fundsListReducer'
 import searchIcon from '../../../assets/images/search-magnifying-glass-svgrepo-com.svg'
+import { inputErrorsAC } from '../../../reducers/errorReducer'
 
 type InputPropsType = {
 	totalValue: number
@@ -24,10 +25,16 @@ export const Input = ({ totalValue }: InputPropsType) => {
 				onKeyPress={(e: any) => {
 					if (e.charCode === 13) {
 						dispatch(addFundAC(value, totalValue))
+						dispatch(inputErrorsAC(value))
 					}
 				}}
 			/>
-			<Button onClick={() => dispatch(addFundAC(value, totalValue))}>
+			<Button
+				onClick={() => {
+					dispatch(addFundAC(value, totalValue))
+					dispatch(inputErrorsAC(value))
+				}}
+			>
 				<img src={searchIcon} alt='searchIcon' />
 			</Button>
 			<Error>{error}</Error>

@@ -3,11 +3,10 @@ import { FundsList } from './components/FundsList/FundsList'
 import styled, { createGlobalStyle } from 'styled-components'
 import { Header } from './components/Header/Header'
 import { useSelector } from 'react-redux'
-import { AppRootStateType } from './state/store'
-import { FundFromFundsListType } from './index'
+import { selectFundsList } from './state/selectors'
 
 export function App() {
-	const fundsList = useSelector<AppRootStateType, FundFromFundsListType[]>(state => state.fundsList)
+	const fundsList = useSelector(selectFundsList)
 	const totalValue = Number(
 		fundsList
 			.reduce((acc, fund) => {

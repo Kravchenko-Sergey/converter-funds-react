@@ -1,7 +1,7 @@
 import React from 'react'
-import { CompanyFromFundsListType } from '../index'
 import { useSelector } from 'react-redux'
-import { AppRootStateType } from '../state/store'
+import { AppRootStateType } from '../state'
+import { CompanyFromFundsListType } from '../types/CompanyFromFundsListType'
 
 type CompaniesListPropsType = {}
 

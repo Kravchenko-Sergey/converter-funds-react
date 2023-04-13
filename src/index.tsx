@@ -2,40 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { App } from './App'
 import { Provider } from 'react-redux'
-import { store } from './state/store'
+import { index } from './state'
 import { v1 } from 'uuid'
-
-export type FundFromDatabaseType = {
-	id: string
-	name: string
-	issuer: string
-	price: number
-	companies: CompanyFromDatabaseFund[]
-}
-export type CompanyFromDatabaseFund = {
-	id: string
-	name: string
-	price: number
-	shareInFund: number
-}
-export type FundFromFundsListType = {
-	id: string
-	name: string
-	issuer: string
-	price: number
-	quantity: number
-	totalPrice: number
-	companies: CompanyFromFundsListType[]
-}
-export type CompanyFromFundsListType = {
-	id: string
-	name: string
-	price: number
-	totalPrice: number
-	shareInFund: number
-	shareInPortfolio: number
-	sumInPortfolio: number
-}
 
 export const database = [
 	{
@@ -156,7 +124,7 @@ export const database = [
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
-	<Provider store={store}>
+	<Provider store={index}>
 		<App />
 	</Provider>
 )

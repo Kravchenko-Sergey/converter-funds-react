@@ -1,20 +1,17 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppRootStateType } from '../../state/store'
-import { FundFromFundsListType } from '../../index'
 import { CompaniesList } from '../CompaniesList'
-import { addFundAC, decrementFundAC, deleteFundHandlerAC, incrementFundAC } from '../../reducers/fundsListReducer'
 import styled from 'styled-components'
-import { inputErrorsAC } from '../../reducers/errorReducer'
 import { Fund } from './Fund/Fund'
+import { selectFundsList } from '../../state/selectors'
+import { addFundAC, decrementFundAC, deleteFundHandlerAC, incrementFundAC, inputErrorsAC } from '../../state/actions'
 
 type FundsListPropsType = {
 	totalValue: number
 }
 
 export const FundsList = ({ totalValue }: FundsListPropsType) => {
-	const fundsList = useSelector<AppRootStateType, FundFromFundsListType[]>(state => state.fundsList)
-
+	const fundsList = useSelector(selectFundsList)
 	const dispatch = useDispatch()
 
 	const addFund = (name: string, totalValue: number) => {

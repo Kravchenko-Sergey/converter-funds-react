@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppRootStateType } from '../../../state/store'
-import { addFundAC } from '../../../reducers/fundsListReducer'
 import searchIcon from '../../../assets/images/search-magnifying-glass-svgrepo-com.svg'
-import { inputErrorsAC } from '../../../reducers/errorReducer'
+import { selectError } from '../../../state/selectors'
+import { addFundAC, inputErrorsAC } from '../../../state/actions'
 
 type InputPropsType = {
 	totalValue: number
@@ -12,7 +11,7 @@ type InputPropsType = {
 
 export const Input = ({ totalValue }: InputPropsType) => {
 	const [value, setValue] = useState('')
-	const error = useSelector<AppRootStateType, string>(state => state.error)
+	const error = useSelector(selectError)
 	const dispatch = useDispatch()
 	return (
 		<InputBlock>

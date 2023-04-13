@@ -6,19 +6,15 @@ import { selectFundsList } from '../../state/selectors'
 import { addFundAC, decrementFundAC, deleteFundHandlerAC, incrementFundAC, inputErrorsAC } from '../../state/actions'
 import { Funds, FundsListTable, Titles, Total, Container, Title } from './StyledFundList'
 
-type FundsListPropsType = {
-	totalValue: number
-}
+type FundsListPropsType = { totalValue: number }
 
 export const FundsList = ({ totalValue }: FundsListPropsType) => {
 	const fundsList = useSelector(selectFundsList)
 	const dispatch = useDispatch()
-
 	const addFund = (name: string, totalValue: number) => {
 		dispatch(addFundAC(name, totalValue))
 		dispatch(inputErrorsAC(name))
 	}
-
 	const fundsElements = fundsList.map(fund => {
 		const incrementFundHandler = () => {
 			dispatch(incrementFundAC(fund.name))

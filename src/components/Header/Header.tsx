@@ -2,9 +2,7 @@ import React from 'react'
 import { Input } from './Input/Input'
 import { Container, Wrapper, List, Login, Logout } from './StyledHeader'
 
-type HeaderPropsType = {
-	totalValue: number
-}
+type HeaderPropsType = { totalValue: number }
 
 export const Header = ({ totalValue }: HeaderPropsType) => {
 	return (

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Button } from '../../Header/Input/Input'
-import styled from 'styled-components'
+import { DeleteButton, Properties, Property, PropertyButtons } from './StyledFund'
+import { Button } from '../../Header/Input/StyledInput'
 
 type FundPropsType = {
 	id: string
@@ -40,22 +40,3 @@ export const Fund = ({
 		</Properties>
 	)
 }
-
-const Properties = styled.tr`
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-`
-
-const Property = styled.td``
-
-const PropertyButtons = styled.td`
-	display: grid;
-	grid-template-columns: 0.4fr 0.4fr 1.2fr;
-	column-gap: 5px;
-`
-
-const DeleteButton = styled(Button)`
-	padding: 4px 8px;
-	background-color: crimson;
-	border-radius: 5px;
-`

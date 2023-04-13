@@ -5,7 +5,6 @@ import { FundFromFundsListType } from '../../types/FundFromFundsListType'
 export const initialState: FundFromFundsListType[] = []
 
 export const fundsListReducer = (state: FundFromFundsListType[] = initialState, action: FundsListActionsType): any => {
-	console.log(state)
 	switch (action.type) {
 		case ADD_FUND: {
 			const isFundInDB = database.find(fund => fund.name === action.payload.name)

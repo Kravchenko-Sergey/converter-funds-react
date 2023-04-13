@@ -1,7 +1,7 @@
 import { createStore, combineReducers, compose } from 'redux'
-import { fundsListReducer } from './reducers/fundsListReducer'
+import { fundsListReducer } from './reducers'
 import { companiesListReducer } from './reducers/companiesListReducer'
-import { errorReducer } from './reducers/errorReducer'
+import { errorReducer } from './reducers'
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
 

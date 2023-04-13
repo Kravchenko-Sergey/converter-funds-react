@@ -1,10 +1,10 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { CompaniesList } from '../CompaniesList'
-import styled from 'styled-components'
+import { CompaniesList } from '../../CompaniesList/CompaniesList'
 import { Fund } from './Fund/Fund'
 import { selectFundsList } from '../../state/selectors'
 import { addFundAC, decrementFundAC, deleteFundHandlerAC, incrementFundAC, inputErrorsAC } from '../../state/actions'
+import { Funds, FundsListTable, Titles, Total, Container, Title } from './StyledFundList'
 
 type FundsListPropsType = {
 	totalValue: number
@@ -66,43 +66,3 @@ export const FundsList = ({ totalValue }: FundsListPropsType) => {
 		</Container>
 	)
 }
-
-const Container = styled.div`
-	width: 80%;
-	margin: 0 auto;
-	display: grid;
-	grid-template-columns: 1fr 2fr 1fr;
-	grid-template-rows: 1fr 1fr 10fr;
-	gap: 10px;
-`
-
-const Total = styled.div`
-	display: grid;
-	justify-content: center;
-	align-items: center;
-	grid-row: 2 / 3;
-	grid-column: 2 / 3;
-`
-
-const FundsListTable = styled.table`
-	grid-row: 3 / 4;
-	grid-column: 2 / 3;
-	border: 2px solid gray;
-	padding: 10px;
-	border-radius: 5px;
-`
-
-const Titles = styled.tr`
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-`
-
-const Title = styled.td`
-	margin: 0 0 10px 0;
-	font-weight: 700;
-`
-
-const Funds = styled.tbody`
-	display: grid;
-	row-gap: 5px;
-`

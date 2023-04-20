@@ -1,6 +1,6 @@
-import { database } from '../../index'
 import { ADD_FUND, DECREMENT_FUND, DELETE_FUND, FundsListActionsType, INCREMENT_FUND } from '../actions'
 import { FundFromFundsListType } from '../../types/FundFromFundsListType'
+import { database } from '../../index'
 
 export const initialState: FundFromFundsListType[] = []
 
@@ -57,7 +57,13 @@ export const fundsListReducer = (state: FundFromFundsListType[] = initialState, 
 					? {
 							...fund,
 							quantity: fund.quantity + 1,
-							totalPrice: fund.price * (fund.quantity + 1)
+							totalPrice: fund.price * (fund.quantity + 1),
+							companies: fund.companies.map(company => ({
+								...company,
+								sumInFund: (fund.totalPrice / 100) * company.shareInFund,
+								shareInPortfolio: ((fund.totalPrice / 100) * company.shareInFund) / (action.payload.totalValue / 100),
+								sumInPortfolio: (fund.totalPrice / 100) * company.shareInFund
+							}))
 					  }
 					: fund
 			)
@@ -69,7 +75,13 @@ export const fundsListReducer = (state: FundFromFundsListType[] = initialState, 
 						? {
 								...fund,
 								quantity: fund.quantity - 1,
-								totalPrice: fund.price * (fund.quantity - 1)
+								totalPrice: fund.price * (fund.quantity - 1),
+								companies: fund.companies.map(company => ({
+									...company,
+									sumInFund: (fund.totalPrice / 100) * company.shareInFund,
+									shareInPortfolio: ((fund.totalPrice / 100) * company.shareInFund) / (action.payload.totalValue / 100),
+									sumInPortfolio: (fund.totalPrice / 100) * company.shareInFund
+								}))
 						  }
 						: fund
 					: fund

@@ -1,5 +1,5 @@
+import { ErrorActionsType, INPUT_ERRORS } from '../actions'
 import { database } from '../../index'
-import { ErrorActionsType, INPUT_ERRORS, RESET_ERROR } from '../actions'
 
 export const errorReducer = (state: string = '', action: ErrorActionsType): string => {
 	switch (action.type) {
@@ -11,7 +11,7 @@ export const errorReducer = (state: string = '', action: ErrorActionsType): stri
 				? ''
 				: 'There is no such fund in the database'
 		}
-		case RESET_ERROR: {
+		case 'RESET-ERROR': {
 			return ''
 		}
 		default:

@@ -1,5 +1,5 @@
 export const INPUT_ERRORS = 'INPUT-ERRORS'
-export const RESET_ERROR = 'RESET-ERROR'
+const RESET_ERROR = 'RESET-ERROR'
 
 export type ErrorActionsType = InputErrorsACType | ResetErrorACType
 
@@ -10,7 +10,6 @@ export const inputErrorsAC = (name: string) => {
 		payload: { name }
 	} as const
 }
-
 type ResetErrorACType = ReturnType<typeof resetErrorAC>
 export const resetErrorAC = () => {
 	return {

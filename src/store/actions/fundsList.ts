@@ -16,18 +16,18 @@ export const addFundAC = (name: string, totalValue: number) => {
 }
 
 type IncrementFundACType = ReturnType<typeof incrementFundAC>
-export const incrementFundAC = (name: string) => {
+export const incrementFundAC = (name: string, totalValue: number) => {
 	return {
 		type: INCREMENT_FUND,
-		payload: { name }
+		payload: { name, totalValue }
 	} as const
 }
 
 type DecrementFundACType = ReturnType<typeof decrementFundAC>
-export const decrementFundAC = (name: string) => {
+export const decrementFundAC = (name: string, totalValue: number) => {
 	return {
 		type: DECREMENT_FUND,
-		payload: { name }
+		payload: { name, totalValue }
 	} as const
 }
 

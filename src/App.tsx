@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FundsList } from './components/FundsList/FundsList'
 import { Header } from './components/Header/Header'
 import { useSelector } from 'react-redux'
 import { selectFundsList } from './store/selectors'
 import { GlobalStyle, Wrapper } from './StyledGlobal'
+import axios from 'axios'
 
 export function App() {
 	const fundsList = useSelector(selectFundsList)

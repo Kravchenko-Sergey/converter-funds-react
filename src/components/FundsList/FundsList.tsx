@@ -1,10 +1,21 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { CompaniesList } from '../../CompaniesList/CompaniesList'
 import { Fund } from './Fund/Fund'
 import { selectFundsList } from '../../store/selectors'
 import { decrementFundAC, deleteFundHandlerAC, incrementFundAC } from '../../store/actions'
-import { Funds, FundsListTable, Titles, Total, Container, Title } from './StyledFundList'
+import {
+	Funds,
+	FundsListTable,
+	Titles,
+	Total,
+	Container,
+	Title,
+	CompaniesListTable,
+	Companies,
+	Company,
+	Property,
+	TitlesC
+} from './StyledFundList'
 
 type FundsListPropsType = { totalValue: number }
 
@@ -14,10 +25,10 @@ export const FundsList = ({ totalValue }: FundsListPropsType) => {
 
 	const fundsElements = fundsList.map(fund => {
 		const incrementFundHandler = () => {
-			dispatch(incrementFundAC(fund.name))
+			dispatch(incrementFundAC(fund.name, totalValue))
 		}
 		const decrementFundHandler = () => {
-			dispatch(decrementFundAC(fund.name))
+			dispatch(decrementFundAC(fund.name, totalValue))
 			fund.quantity === 1 && dispatch(deleteFundHandlerAC(fund.name))
 		}
 		const deleteFundHandler = () => {
@@ -55,7 +66,32 @@ export const FundsList = ({ totalValue }: FundsListPropsType) => {
 				</thead>
 				<Funds>{fundsElements}</Funds>
 			</FundsListTable>
-			<CompaniesList />
+			<CompaniesListTable>
+				<thead>
+					<TitlesC>
+						<Title>Name</Title>
+						<Title>Country</Title>
+						<Title>Sector</Title>
+						<Title>shareInFund</Title>
+						<Title>shareInPortfolio</Title>
+						<Title>sumInPortfolio</Title>
+					</TitlesC>
+				</thead>
+				<Companies>
+					{fundsList.map(fund =>
+						fund.companies.map(company => (
+							<Company key={company.id}>
+								<Property>{company.name}</Property>
+								<Property>{company.country}</Property>
+								<Property>{company.sector}</Property>
+								<Property>{company.shareInFund}</Property>
+								<Property>{company.shareInPortfolio.toFixed(2)}</Property>
+								<Property>{company.sumInPortfolio.toFixed(2)}</Property>
+							</Company>
+						))
+					)}
+				</Companies>
+			</CompaniesListTable>
 		</Container>
 	)
 }

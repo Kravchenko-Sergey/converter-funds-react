@@ -1,11 +1,10 @@
-import React, { ChangeEvent, KeyboardEvent, useState } from 'react'
+import React, { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import searchIcon from '../../../assets/images/search-magnifying-glass-svgrepo-com.svg'
 import { selectError, selectInputValue } from '../../../store/selectors'
-import { addFundAC, inputErrorsAC, resetErrorAC } from '../../../store/actions'
-import { Button, Input2, InputBlock, Error, List } from './StyledInput'
+import { addFundAC, inputErrorsAC } from '../../../store/actions'
+import { Button, Input2, InputBlock, Error } from './StyledInput'
 import { onChangeInputValueAC, resetInputValueAC } from '../../../store/actions'
-import { database } from '../../../index'
 
 type InputPropsType = { totalValue: number }
 
@@ -16,20 +15,19 @@ export const Input = ({ totalValue }: InputPropsType) => {
 
 	const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
 		dispatch(onChangeInputValueAC(e.currentTarget.value))
-		dispatch(resetErrorAC())
 	}
 
 	const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
 		if (e.code === 'Enter') {
-			dispatch(addFundAC(inputValue, totalValue))
-			dispatch(inputErrorsAC(inputValue))
+			dispatch(addFundAC(inputValue.trim(), totalValue))
+			dispatch(inputErrorsAC(inputValue.trim()))
 			dispatch(resetInputValueAC())
 		}
 	}
 
 	const onClickHandler = () => {
-		dispatch(addFundAC(inputValue, totalValue))
-		dispatch(inputErrorsAC(inputValue))
+		dispatch(addFundAC(inputValue.trim(), totalValue))
+		dispatch(inputErrorsAC(inputValue.trim()))
 		dispatch(resetInputValueAC())
 	}
 

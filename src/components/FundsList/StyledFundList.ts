@@ -20,7 +20,7 @@ export const Total = styled.div`
 export const FundsListTable = styled.table`
 	grid-row: 2 / 3;
 	grid-column: 2 / 3;
-	border: 2px solid gray;
+	border: 2px solid cornflowerblue;
 	padding: 10px;
 	border-radius: 5px;
 `
@@ -43,7 +43,7 @@ export const Funds = styled.tbody`
 export const CompaniesListTable = styled.table`
 	grid-row: 3 / 4;
 	grid-column: 2 / 3;
-	border: 2px solid gray;
+	border: 2px solid cornflowerblue;
 	padding: 10px;
 	border-radius: 5px;
 `
@@ -56,10 +56,19 @@ export const Companies = styled.tbody`
 export const Company = styled.tr`
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+	&:hover {
+		background-color: lightgray;
+	}
 `
 
-export const Property = styled.td``
+export const Property = styled.td`
+	font-size: 14px;
+`
 
 export const TitlesC = styled(Titles)`
 	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+`
+
+export const Filter = styled.div`
+	grid-row: 3 / 4;
 `

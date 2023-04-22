@@ -1,6 +1,5 @@
 import React from 'react'
-import { DeleteButton, Properties, Property, PropertyButtons } from './StyledFund'
-import { Button } from '../../Header/Input/StyledInput'
+import { DeleteButton, Properties, Property, PropertyButtons, ButtonInc } from './StyledFund'
 
 type FundPropsType = {
 	id: string
@@ -33,8 +32,8 @@ export const Fund = ({
 			<Property>{quantity}</Property>
 			<Property>{totalPrice.toFixed(2)}</Property>
 			<PropertyButtons>
-				<Button onClick={incrementFundHandler}>+</Button>
-				<Button onClick={decrementFundHandler}>-</Button>
+				<ButtonInc onClick={incrementFundHandler}>+</ButtonInc>
+				<ButtonInc onClick={decrementFundHandler}>-</ButtonInc>
 				<DeleteButton onClick={deleteFundHandler}>delete</DeleteButton>
 			</PropertyButtons>
 		</Properties>

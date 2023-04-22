@@ -1,15 +1,12 @@
-import { ErrorActionsType, INPUT_ERRORS } from '../actions'
-import { database } from '../../index'
+import { ErrorActionsType, NO_EMPTY_ERROR, NO_FUND_ERROR } from '../actions'
 
 export const errorReducer = (state: string = '', action: ErrorActionsType): string => {
 	switch (action.type) {
-		case INPUT_ERRORS: {
-			const isFundInDB = database.find(fund => fund.name === action.payload.name)
-			return action.payload.name.trim() === ''
-				? 'value must not be empty'
-				: isFundInDB
-				? ''
-				: 'There is no such fund in the database'
+		case NO_FUND_ERROR: {
+			return 'There is no such fund in the database'
+		}
+		case NO_EMPTY_ERROR: {
+			return 'value must not be empty'
 		}
 		case 'RESET-ERROR': {
 			return ''

@@ -4,6 +4,7 @@ import { App } from './App'
 import { Provider } from 'react-redux'
 import { index } from './store'
 import { v1 } from 'uuid'
+import { BrowserRouter } from 'react-router-dom'
 
 export const database = [
 	{
@@ -154,7 +155,9 @@ export const database = [
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
-	<Provider store={index}>
-		<App />
-	</Provider>
+	<BrowserRouter>
+		<Provider store={index}>
+			<App />
+		</Provider>
+	</BrowserRouter>
 )

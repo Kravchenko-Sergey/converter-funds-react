@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Fund } from './Fund/Fund'
 import { selectFundsList } from '../../store/selectors'
@@ -16,10 +16,15 @@ import {
 	Property,
 	TitlesC
 } from './StyledFundList'
+import { fetchFundsListTC } from '../../store/reducers/fundsListReducer'
 
 type FundsListPropsType = { totalValue: number }
 
 export const FundsList = ({ totalValue }: FundsListPropsType) => {
+	useEffect(() => {
+		dispatch(fetchFundsListTC())
+	}, [])
+
 	const fundsList = useSelector(selectFundsList)
 	const dispatch = useDispatch()
 
@@ -34,6 +39,7 @@ export const FundsList = ({ totalValue }: FundsListPropsType) => {
 		const deleteFundHandler = () => {
 			dispatch(deleteFundHandlerAC(fund.name))
 		}
+
 		return (
 			<Fund
 				key={fund.id}

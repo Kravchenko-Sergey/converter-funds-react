@@ -1,8 +1,9 @@
-import { createStore, combineReducers, compose } from 'redux'
+import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import { fundsListReducer } from './reducers'
 import { companiesListReducer } from './reducers/companiesListReducer'
 import { errorReducer } from './reducers'
 import { inputValueReducer } from './reducers'
+import thunk from 'redux-thunk'
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
@@ -14,7 +15,9 @@ const rootReducer = combineReducers({
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-export const index = createStore(rootReducer, composeEnhancers())
+export const index = createStore(rootReducer, applyMiddleware(thunk))
+
+export type AppDispatch = typeof index.dispatch
 
 // @ts-ignore
 window.store = index

@@ -5,7 +5,7 @@ import { selectError, selectFundsList, selectInputValue } from '../../../store/s
 import { addFundAC, incrementFundAC, noEmptyErrorAC, noFundErrorAC, resetErrorAC } from '../../../store/actions'
 import { Button, Input2, InputBlock, Error } from './StyledInput'
 import { onChangeInputValueAC, resetInputValueAC } from '../../../store/actions'
-import { database } from '../../../index'
+import { addFundTC } from '../../../store/reducers/fundsListReducer'
 
 type InputPropsType = { totalValue: number }
 
@@ -14,7 +14,6 @@ export const Input = ({ totalValue }: InputPropsType) => {
 	const inputValue = useSelector(selectInputValue)
 	const error = useSelector(selectError)
 	const dispatch = useDispatch()
-	const isFundInDB = database.find(fund => fund.name === inputValue)
 	const isFundInFundList = fundsList.find(fund => fund.name === inputValue)
 
 	const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,34 +23,12 @@ export const Input = ({ totalValue }: InputPropsType) => {
 
 	const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
 		if (e.code === 'Enter') {
-			if (isFundInDB) {
-				if (!isFundInFundList) {
-					dispatch(addFundAC(inputValue.trim(), totalValue))
-					dispatch(resetInputValueAC())
-				} else {
-					dispatch(incrementFundAC(inputValue.trim(), totalValue))
-				}
-			} else if (inputValue.trim() === '') {
-				dispatch(noEmptyErrorAC())
-			} else {
-				dispatch(noFundErrorAC())
-			}
+			dispatch(addFundTC(fundsList, inputValue, totalValue))
 		}
 	}
 
 	const onClickHandler = () => {
-		if (isFundInDB) {
-			if (!isFundInFundList) {
-				dispatch(addFundAC(inputValue.trim(), totalValue))
-				dispatch(resetInputValueAC())
-			} else {
-				dispatch(incrementFundAC(inputValue.trim(), totalValue))
-			}
-		} else if (inputValue.trim() === '') {
-			dispatch(noEmptyErrorAC())
-		} else {
-			dispatch(noFundErrorAC())
-		}
+		dispatch(addFundTC(fundsList, inputValue, totalValue))
 	}
 
 	return (

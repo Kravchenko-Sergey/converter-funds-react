@@ -25,7 +25,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "typings", "src", ["src/components", "src/custom.d.ts"]
-  ]
+  "include": ["src"]
 }

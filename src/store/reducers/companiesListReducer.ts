@@ -1,13 +1,12 @@
 import { database } from '../../index'
 import { DECREMENT_FUND, DELETE_FUND, INCREMENT_FUND } from '../actions'
+import { ADD_COMPANIES } from '../actions/companiesList'
 
 const defaultState: any = []
 
-const ADD_FUND = 'ADD-FUND'
-
 export const companiesListReducer = (state: any = defaultState, action: any): any => {
 	switch (action.type) {
-		case ADD_FUND: {
+		case ADD_COMPANIES: {
 			const isFundInDB = database.find(fund => fund.name === action.payload.name)
 			return isFundInDB?.companies.map(company => ({
 				...company,

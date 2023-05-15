@@ -4,8 +4,22 @@ export const ADD_FUND = 'ADD-FUND'
 export const INCREMENT_FUND = 'INCREMENT-FUND'
 export const DECREMENT_FUND = 'DECREMENT-FUND'
 export const DELETE_FUND = 'DELETE-FUND'
+export const SET_FUNDSLIST = 'SET-FUNDSLIST'
 
-export type FundsListActionsType = AddFundACType | IncrementFundACType | DecrementFundACType | DeleteFundHandlerACType
+export type FundsListActionsType =
+	| AddFundACType
+	| IncrementFundACType
+	| DecrementFundACType
+	| DeleteFundHandlerACType
+	| SetFundsListACType
+
+type SetFundsListACType = ReturnType<typeof setFundsListAC>
+export const setFundsListAC = (fundsList: any) => {
+	return {
+		type: SET_FUNDSLIST,
+		payload: { fundsList }
+	} as const
+}
 
 type AddFundACType = ReturnType<typeof addFundAC>
 export const addFundAC = (name: string, totalValue: number) => {

@@ -30,7 +30,7 @@ export const Fund = ({
 			<Property>{issuer}</Property>
 			<Property>{price}</Property>
 			<Property>{quantity}</Property>
-			<Property>{totalPrice.toFixed(2)}</Property>
+			<Property>{totalPrice}</Property>
 			<PropertyButtons>
 				<ButtonInc onClick={incrementFundHandler}>+</ButtonInc>
 				<ButtonInc onClick={decrementFundHandler}>-</ButtonInc>

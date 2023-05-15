@@ -22,10 +22,10 @@ export const setFundsListAC = (fundsList: any) => {
 }
 
 type AddFundACType = ReturnType<typeof addFundAC>
-export const addFundAC = (name: string, totalValue: number) => {
+export const addFundAC = (fund: any, name: string, totalValue: number) => {
 	return {
 		type: ADD_FUND,
-		payload: { id: v1(), name, totalValue }
+		payload: { fund, name, totalValue }
 	} as const
 }
 
@@ -46,9 +46,9 @@ export const decrementFundAC = (name: string, totalValue: number) => {
 }
 
 type DeleteFundHandlerACType = ReturnType<typeof deleteFundHandlerAC>
-export const deleteFundHandlerAC = (name: string) => {
+export const deleteFundHandlerAC = (id: string) => {
 	return {
 		type: DELETE_FUND,
-		payload: { name }
+		payload: { id }
 	} as const
 }

@@ -3,6 +3,7 @@ import {
 	addFundAC,
 	DECREMENT_FUND,
 	DELETE_FUND,
+	deleteFundHandlerAC,
 	FundsListActionsType,
 	INCREMENT_FUND,
 	incrementFundAC,
@@ -12,7 +13,6 @@ import {
 	SET_FUNDSLIST
 } from '../actions'
 import { FundFromFundsListType } from '../../types/FundFromFundsListType'
-import { database } from '../../index'
 import { databaseApi, fundsListAPI } from '../../api/database-api'
 import { Dispatch } from 'redux'
 
@@ -20,25 +20,25 @@ export const initialState: FundFromFundsListType[] = []
 export const fundsListReducer = (state: FundFromFundsListType[] = initialState, action: FundsListActionsType): any => {
 	switch (action.type) {
 		case SET_FUNDSLIST: {
-			return action.payload.fundsList.map((fl: any) => ({ ...fl }))
+			return action.payload.fundsList.map((fl: any) => ({ ...fl, quantity: 1, totalPrice: fl.price }))
 		}
 		case ADD_FUND: {
-			const isFundInDB = database.find(fund => fund.name === action.payload.name)
 			return [
 				{
-					id: action.payload.id,
-					name: isFundInDB?.name,
-					issuer: isFundInDB?.issuer,
+					id: action.payload.fund?.id,
+					name: action.payload.fund?.name,
+					issuer: action.payload.fund?.issuer,
 					quantity: 1,
-					price: isFundInDB?.price,
-					totalPrice: isFundInDB?.price,
-					companies: isFundInDB?.companies.map(company =>
+					price: action.payload.fund?.price,
+					totalPrice: action.payload.fund?.price,
+					companies: action.payload.fund?.companies.map((company: any) =>
 						company
 							? {
 									...company,
-									sumInFund: (isFundInDB.price / 100) * company.shareInFund,
-									shareInPortfolio: ((isFundInDB.price / 100) * company.shareInFund) / (isFundInDB.price / 100),
-									sumInPortfolio: (isFundInDB.price / 100) * company.shareInFund
+									sumInFund: (action.payload.fund.price / 100) * company.shareInFund,
+									shareInPortfolio:
+										((action.payload.fund.price / 100) * company.shareInFund) / (action.payload.fund.price / 100),
+									sumInPortfolio: (action.payload.fund.price / 100) * company.shareInFund
 							  }
 							: company
 					)
@@ -83,7 +83,7 @@ export const fundsListReducer = (state: FundFromFundsListType[] = initialState, 
 			)
 		}
 		case DELETE_FUND: {
-			return state.filter(fund => fund.name !== action.payload.name)
+			return state.filter(fund => fund.id !== action.payload.id)
 		}
 		default:
 			return state
@@ -93,33 +93,46 @@ export const fundsListReducer = (state: FundFromFundsListType[] = initialState, 
 export const setFundsListAC = (fundsList: any) => {
 	return {
 		type: SET_FUNDSLIST,
-		fundsList
+		payload: { fundsList }
 	}
 }
 
 export const fetchFundsListTC = (): any => (dispatch: Dispatch) => {
 	fundsListAPI.getFundsList().then((res: any) => {
-		dispatch(setFundsListAC(res.fundsList))
+		console.log(res.data)
+		dispatch(setFundsListAC(res.data))
 	})
 }
 
 export const addFundTC =
-	(fundsList: any, inputValue: any, totalValue: any): any =>
+	(inputValue: any, totalValue: any): any =>
 	(dispatch: Dispatch): any => {
 		databaseApi.getDatabase().then(res => {
 			const isFundInDB = res.data.find((fund: any) => fund.name === inputValue)
-			const isFundInFundList = fundsList.find((fund: any) => fund.name === inputValue)
 			if (isFundInDB) {
-				if (!isFundInFundList) {
-					dispatch(addFundAC(inputValue.trim(), totalValue))
-					dispatch(resetInputValueAC())
-				} else {
-					dispatch(incrementFundAC(inputValue.trim(), totalValue))
-				}
+				fundsListAPI.getFundsList().then(res => {
+					const isFundInFundList = res.data.find((fund: any) => fund.name === inputValue)
+					if (!isFundInFundList) {
+						fundsListAPI.addFund(isFundInDB).then(res => {
+							dispatch(addFundAC(isFundInDB, inputValue.trim(), totalValue))
+							dispatch(resetInputValueAC())
+						})
+					} else {
+						dispatch(incrementFundAC(inputValue.trim(), totalValue))
+					}
+				})
 			} else if (inputValue.trim() === '') {
 				dispatch(noEmptyErrorAC())
 			} else {
 				dispatch(noFundErrorAC())
 			}
+		})
+	}
+
+export const deleteFundTC =
+	(fundId: any): any =>
+	(dispatch: Dispatch) => {
+		fundsListAPI.deleteFund(fundId).then(res => {
+			dispatch(deleteFundHandlerAC(fundId))
 		})
 	}

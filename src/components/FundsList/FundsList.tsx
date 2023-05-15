@@ -16,7 +16,7 @@ import {
 	Property,
 	TitlesC
 } from './StyledFundList'
-import { fetchFundsListTC } from '../../store/reducers/fundsListReducer'
+import { deleteFundTC, fetchFundsListTC } from '../../store/reducers/fundsListReducer'
 
 type FundsListPropsType = { totalValue: number }
 
@@ -37,7 +37,7 @@ export const FundsList = ({ totalValue }: FundsListPropsType) => {
 			fund.quantity === 1 && dispatch(deleteFundHandlerAC(fund.name))
 		}
 		const deleteFundHandler = () => {
-			dispatch(deleteFundHandlerAC(fund.name))
+			dispatch(deleteFundTC(fund.id))
 		}
 
 		return (
@@ -84,18 +84,18 @@ export const FundsList = ({ totalValue }: FundsListPropsType) => {
 					</TitlesC>
 				</thead>
 				<Companies>
-					{fundsList.map(fund =>
+					{/*{fundsList.map(fund =>
 						fund.companies.map(company => (
 							<Company key={company.id}>
 								<Property>{company.name}</Property>
 								<Property>{company.country}</Property>
 								<Property>{company.sector}</Property>
 								<Property>{company.shareInFund}</Property>
-								<Property>{company.shareInPortfolio.toFixed(2)}</Property>
-								<Property>{company.sumInPortfolio.toFixed(2)}</Property>
+								<Property>{company.shareInPortfolio}</Property>
+								<Property>{company.sumInPortfolio}</Property>
 							</Company>
 						))
-					)}
+					)}*/}
 				</Companies>
 			</CompaniesListTable>
 		</Container>

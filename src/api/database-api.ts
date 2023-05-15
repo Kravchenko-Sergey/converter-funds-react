@@ -16,5 +16,8 @@ export const fundsListAPI = {
 	},
 	addFund(data: any) {
 		return instance.post<any>('/fundsList', data)
+	},
+	deleteFund(id: any) {
+		return instance.delete<any>(`fundsList/${id}`)
 	}
 }
